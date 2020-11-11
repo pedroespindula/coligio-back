@@ -1,6 +1,6 @@
 const service = require('../services/usuario.service');
 
-exports.post = async (req, res) => {
+const post = async (req, res) => {
   try {
     const novoUsuario = await service.create(req.body);
 
@@ -13,10 +13,40 @@ exports.post = async (req, res) => {
     console.error(errorMsg, '', e.message);
     return res.status(500).json({ error: `${errorMsg} ${e.message}` });
   }
+};
+  
+const get = async (req, res, next) => {
+  try {
+    
+    const usuarios = await service.get();
 
+    return res.status(200).json(usuarios);
+  } catch (e) {
+    const errorMsg = 'Erro ao buscar usuários';
+    
+    console.error(errorMsg, '', e.message);
+    return res.status(500).json({ error: `${errorMsg} ${e.message}` });
+  }
+};
+  
+const getById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    
+    const usuario = await service.getById(id);
+
+    if (!usuario) res.status(404).json({ error: 'Usuário não encontrado' });
+
+    return res.status(200).json(usuario);
+  } catch (e) {
+    const errorMsg = 'Erro ao buscar usuário por id';
+    
+    console.error(errorMsg, '', e.message);
+    return res.status(500).json({ error: `${errorMsg} ${e.message}` });
+  }
 };
 
-exports.put = async (req, res, next) => {
+const put = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -35,7 +65,7 @@ exports.put = async (req, res, next) => {
   }
 };
 
-exports.delete = async (req, res, next) => {
+const deleteById = async (req, res, next) => {
   try {
     const { id } = req.params;
     
@@ -51,34 +81,11 @@ exports.delete = async (req, res, next) => {
     return res.status(500).json({ error: `${errorMsg} ${e.message}` });
   }
 };
-  
-exports.get = async (req, res, next) => {
-  try {
-    
-    const usuarios = await service.get();
 
-    return res.status(200).json(usuarios);
-  } catch (e) {
-    const errorMsg = 'Erro ao buscar usuários';
-    
-    console.error(errorMsg, '', e.message);
-    return res.status(500).json({ error: `${errorMsg} ${e.message}` });
-  }
-};
-  
-exports.getById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    
-    const usuario = await service.getById(id);
-
-    if (!usuario) res.status(404).json({ error: 'Usuário não encontrado' });
-
-    return res.status(200).json(usuario);
-  } catch (e) {
-    const errorMsg = 'Erro ao buscar usuário por id';
-    
-    console.error(errorMsg, '', e.message);
-    return res.status(500).json({ error: `${errorMsg} ${e.message}` });
-  }
-};
+module.exports = {
+  post,
+  get,
+  getById,
+  put,
+  deleteById
+}
