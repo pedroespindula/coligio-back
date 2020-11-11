@@ -2,8 +2,8 @@ require('dotenv').config();
 
 const environment = {
   API: {
-    host: process.env.BASE_URL || 'localhost',
-    port: process.env.PORT || 3000
+    HOST: process.env.BASE_URL || 'localhost',
+    PORT: process.env.PORT || 3000
   },
   DB: {
     host: process.env.DB_HOST || 'localhost',
