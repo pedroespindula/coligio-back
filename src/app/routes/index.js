@@ -1,9 +1,11 @@
-const userRoute = require('./userRoute');
-const disciplinaRoute = require('./disciplinaRoute');
-const atividadeRoute = require('./atividadeRoute');
+const express = require('express');
 
-module.exports = (app) => {
-    userRoute(app);
-    disciplinaRoute(app);
-    atividadeRoute(app);
-}
+const router = express.Router();
+
+const usuario = require('./usuarioRoute');
+
+router.get('/', (_, res) => res.send('API :)'));
+
+router.use('/usuario', usuario);
+
+module.exports = router;
