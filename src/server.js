@@ -5,10 +5,11 @@ const routes = require('./app/routes/index');
 
 const { PORT } = require('./config/environment').API;
 
-require('./db');
+app.use(cors());
+app.use(express.json());
 
 app.use('/', routes);
 
-app.use(cors());
-app.use(express.json());
+require('./db');
+
 app.listen(PORT || 3000);

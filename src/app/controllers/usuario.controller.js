@@ -1,8 +1,7 @@
-const service = require('../services/usuarioService');
+const service = require('../services/usuario.service');
 
 exports.post = async (req, res) => {
   try {
-    return 0;
     const novoUsuario = await service.create(req.body);
 
     if (!novoUsuario) return res.status(400).json({ error: 'Usuário já existe' });
@@ -30,8 +29,7 @@ exports.delete = (req, res, next) => {
 };
   
 exports.get = (req, res, next) => {
-    res.status = 200;
-    res.send('Usuario - Rota GET!');
+  return res.status(200).json({ msg: "Deu certo" })
 };
   
 exports.getById = (req, res, next) => {
