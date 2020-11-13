@@ -1,10 +1,11 @@
 const { Disciplina } = require('../models');
 
-const create = async ({ instituicao, nome, semestre, cargaHorario, professor }) => {
-  let id = instituicao + ' ' + nome + ' ' + semestre
+const create = async ({nome, semestre, cargaHoraria}) => {
+  
     const disciplina = await Disciplina.findOne({
     where: {
-      id,
+      nome,
+      semestre
     },
   });
 
@@ -13,11 +14,10 @@ const create = async ({ instituicao, nome, semestre, cargaHorario, professor }) 
   }
 
   const novaDisciplina = await Disciplina.create({
-    instituicao,
     nome,
     semestre,
-    cargaHorario,
-    professor
+    cargaHoraria
+
   });
 
   return novaDisciplina;
