@@ -1,6 +1,6 @@
 const { Usuario } = require('../models');
 
-const create = async ({ nome, senha, email }) => {
+const create = async ({ nome, senha, email,cargo }) => {
   const usuario = await Usuario.findOne({
     where: {
       email,
@@ -14,7 +14,8 @@ const create = async ({ nome, senha, email }) => {
   const novoUsuario = await Usuario.create({
     nome,
     senha,
-    email
+    email,
+    cargo
   });
 
   return novoUsuario;

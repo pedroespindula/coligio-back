@@ -14,6 +14,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
+      cargo: {
+        type: Sequelize.ENUM,
+        values: ["professor", "aluno"],
+        allowNull: false
+      }
     },
     {}
   );
