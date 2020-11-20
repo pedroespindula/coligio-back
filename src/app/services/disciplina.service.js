@@ -54,12 +54,12 @@ const deleteById = async (id) => {
 };
 
 const addUserToDisciplina = async (user, disciplina) => {
-  const matriculados = disciplina.matriculados.push(user);
+  const matriculados = await disciplina.matriculados.push(user);
   return matriculados;
 };
 
 const removeUserFromDisciplina = async (user, disciplina) => {
-  const usuarioDesmatriculado = disciplina.matriculados.splice(disciplina.matriculados.indexOf(user), 1);
+  const usuarioDesmatriculado = await disciplina.matriculados.splice(await disciplina.matriculados.indexOf(user), 1);
   return  usuarioDesmatriculado;
 
 };

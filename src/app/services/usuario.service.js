@@ -64,12 +64,12 @@ const subscribeUser = async (userId, disciplinaId) => {
   const usuario = await getById(userId);
 
   const { disciplinaService } = require('./disciplina.service');
-  const disciplina = disciplinaService.getById(disciplinaId);
+  const disciplina = await disciplinaService.getById(disciplinaId);
 
   if( usuario && disciplina){
-    if(usuario.disciplinasMatriculadas.indexOf(disciplina) == -1){
-      const userSubscribed = usuario.disciplinasMatriculadas.push(disciplina);
-      disciplinaService.addUserToDisciplina(usuario, disciplina);
+    if(await usuario.disciplinasMatriculadas.indexOf(disciplina) == -1){
+      const userSubscribed = await usuario.disciplinasMatriculadas.push(disciplina);
+      await disciplinaService.addUserToDisciplina(usuario, disciplina);
 
       return userSubscribed;
     }
@@ -81,13 +81,13 @@ const unsubscribeUser = async (userId, disciplinaId) => {
   const usuario = await getById(userId);
 
   const { disciplinaService } = require('./disciplina.service');
-  const disciplina = disciplinaService.getById(disciplinaId);
+  const disciplina = await disciplinaService.getById(disciplinaId);
 
   if(usuario && disciplina){
-    const index = usuario.disciplinasMatriculadas.indexOf(disciplina);
+    const index = await usuario.disciplinasMatriculadas.indexOf(disciplina);
     if(index > -1){
-      const userUnsubscribed = usuario.disciplinasMatriculadas.splice(index, 1);
-      disciplinaService.removeUserFromDisciplina(usuario, disciplina);
+      const userUnsubscribed = await usuario.disciplinasMatriculadas.splice(index, 1);
+      await disciplinaService.removeUserFromDisciplina(usuario, disciplina);
       return userSubscribed;
     }
   }
