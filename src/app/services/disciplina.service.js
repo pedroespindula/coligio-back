@@ -1,4 +1,5 @@
 const { Disciplina } = require('../models');
+const disciplina = require('../models/disciplina');
 
 const create = async ({nome, semestre, cargaHoraria}) => {
   
@@ -49,11 +50,18 @@ const addUserToDisciplina = async (user, disciplina) => {
   return matriculados;
 };
 
+const removeUserFromDisciplina = async (user, disciplina) => {
+  const usuarioDesmatriculado = disciplina.matriculados.splice(disciplina.matriculados.indexOf(user), 1);
+  return  usuarioDesmatriculado;
+
+};
+
 
 module.exports = {
   create,
   get,
   getById,
   deleteById,
-  addUserToDisciplina
+  addUserToDisciplina,
+  removeUserFromDisciplina
 }
