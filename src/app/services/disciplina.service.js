@@ -36,6 +36,14 @@ const getById = async (id) => {
   return disciplina;  
 };
 
+const getAlunosDisciplina = async(id) => {
+  const disciplina = await getById(id);
+  if(! disciplina){
+    return;
+  }
+  return disciplina.matriculados;
+};
+
 
 const deleteById = async (id) => {
   const disciplina = await getById(id);
@@ -61,7 +69,8 @@ module.exports = {
   create,
   get,
   getById,
-  deleteById,
+  getAlunosDisciplina,
+  deleteById,  
   addUserToDisciplina,
   removeUserFromDisciplina
 }
