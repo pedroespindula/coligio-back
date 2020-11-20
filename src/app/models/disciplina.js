@@ -1,3 +1,6 @@
+const { DataTypes } = require("sequelize/types");
+const usuario = require("./usuario");
+
 module.exports = (sequelize, Sequelize) => {
     const Disciplina = sequelize.define(
       'Disciplina',
@@ -15,6 +18,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        matriculados:{
+          type: DataTypes.ARRAY(usuario),
+          allowNull: false
+        }
       },
       {}
     );
