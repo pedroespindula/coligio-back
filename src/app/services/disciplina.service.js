@@ -55,5 +55,5 @@ module.exports = {
   get,
   getById,
   deleteById,
-  addUserToDisciplina;
+  addUserToDisciplina
 }
