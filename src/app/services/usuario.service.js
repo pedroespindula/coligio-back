@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize/types');
 const { Usuario } = require('../models');
 const disciplina = require('../models/disciplina');
+const usuario = require('../models/usuario');
 
 const create = async ({ nome, senha, email,cargo }) => {
   const usuario = await Usuario.findOne({
@@ -33,6 +34,14 @@ const getById = async (id) => {
   const usuario = await Usuario.findByPk(id);
 
   return usuario;  
+};
+
+const getDisciplinasMatriculadas = async(id) =>{
+  const usuario = await getById(id);
+  if(!usuario){
+    return;
+  }
+  return usuario.disciplinasMatriculadas;
 };
 
 const edit = async (id, data) => {
@@ -91,6 +100,7 @@ module.exports = {
   create,
   get,
   getById,
+  getDisciplinasMatriculadas,
   edit,
   deleteById,
   subscribeUser,
