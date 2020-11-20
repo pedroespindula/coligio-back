@@ -44,9 +44,16 @@ const deleteById = async (id) => {
   return disciplinaApagada;
 };
 
+const addUserToDisciplina = async (user, disciplina) => {
+  const matriculados = disciplina.matriculados.push(user);
+  return matriculados;
+};
+
+
 module.exports = {
   create,
   get,
   getById,
-  deleteById
+  deleteById,
+  addUserToDisciplina;
 }
