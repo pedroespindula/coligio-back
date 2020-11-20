@@ -1,4 +1,6 @@
+const { DataTypes } = require('sequelize/types');
 const { Usuario } = require('../models');
+const disciplina = require('../models/disciplina');
 
 const create = async ({ nome, senha, email,cargo }) => {
   const usuario = await Usuario.findOne({
@@ -49,10 +51,25 @@ const deleteById = async (id) => {
   return usuarioDeletado;
 };
 
+const subscribeUser = async (userId, disciplinaId) => {
+  const usuario = await getById(userId);
+
+  const { disciplinaService } = require('./disciplina.service');
+  const disciplina = disciplinaService.getById(disciplinaId);
+
+  if( !(usuario && disciplina)){
+    return;
+  }  
+  const userSubscribed = usuario.disciplinasMatriculadas.push(disciplina);
+  return userSubscribed;
+};
+
+
 module.exports = {
   create,
   get,
   getById,
   edit,
-  deleteById
+  deleteById,
+  subscribeUser
 }
