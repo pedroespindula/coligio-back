@@ -1,5 +1,4 @@
 const { Disciplina } = require('../models');
-const disciplina = require('../models/disciplina');
 
 const create = async ({nome, semestre, cargaHoraria}) => {
   
@@ -31,7 +30,9 @@ const get = async () => {
 };
 
 const getById = async (id) => {
-  const disciplina = await Disciplina.findByPk(id);
+  const disciplina = await Disciplina.findByPk(id, {
+    include: 'alunos'
+  });
 
   return disciplina;  
 };

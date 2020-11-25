@@ -1,6 +1,3 @@
-const { DataTypes } = require("sequelize/types");
-const disciplina = require("./disciplina");
-
 module.exports = (sequelize, Sequelize) => {
   const Usuario = sequelize.define(
     'Usuario',
@@ -21,14 +18,19 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.ENUM,
         values: ["professor", "aluno"],
         allowNull: false
-      },
-      disciplinas_matriculadas:{
-        type: DataTypes.ARRAY(disciplina),
-        allowNull: true
       }
     },
     {}
   );
-
+  Usuario.belongsToMany(sequelize.models.Disciplina, {
+    through: sequelize.models.Matricula,
+    as: 'disciplinas',
+    foreignKey: 'usuarioId'
+  });
+  sequelize.models.Disciplina.belongsToMany(sequelize.models.Usuario, {
+    through: sequelize.models.Matricula,
+    as: 'alunos',
+    foreignKey: 'disciplinaId'
+  });
   return Usuario;
 };

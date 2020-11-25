@@ -1,7 +1,4 @@
-const { DataTypes } = require('sequelize/types');
 const { Usuario } = require('../models');
-const disciplina = require('../models/disciplina');
-const usuario = require('../models/usuario');
 
 const create = async ({ nome, senha, email,cargo }) => {
   const usuario = await Usuario.findOne({
@@ -31,7 +28,9 @@ const get = async () => {
 };
 
 const getById = async (id) => {
-  const usuario = await Usuario.findByPk(id);
+  const usuario = await Usuario.findByPk(id, {
+    include: 'disciplinas'
+  });
 
   return usuario;  
 };
