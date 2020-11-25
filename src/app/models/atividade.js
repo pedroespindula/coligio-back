@@ -13,6 +13,10 @@ module.exports = (sequelize, Sequelize) => {
       dataEntrega: { 
         type: Sequelize.DATE
       },
+      disciplinaId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      }
     },
     {}
   );

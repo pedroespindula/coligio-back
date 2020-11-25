@@ -1,6 +1,6 @@
 const { Disciplina } = require('../models');
 
-const create = async ({nome, semestre, cargaHoraria}) => {
+const create = async ({nome, semestre, cargaHoraria}, professorId) => {
   
     const disciplina = await Disciplina.findOne({
     where: {
@@ -16,22 +16,24 @@ const create = async ({nome, semestre, cargaHoraria}) => {
   const novaDisciplina = await Disciplina.create({
     nome,
     semestre,
-    cargaHoraria
-
+    cargaHoraria,
+    professorId
   });
 
   return novaDisciplina;
 };
 
 const get = async () => {
-  const disciplinas = await Disciplina.findAll();
+  const disciplinas = await Disciplina.findAll({
+    include: ['alunos','professor','atividades']
+  });
 
   return disciplinas;  
 };
 
 const getById = async (id) => {
   const disciplina = await Disciplina.findByPk(id, {
-    include: 'alunos'
+    include: ['alunos','professor','atividades']
   });
 
   return disciplina;  

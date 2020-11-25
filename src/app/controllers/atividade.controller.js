@@ -1,8 +1,19 @@
 const service = require('../services/atividade.service');
 
+const validaDisciplina = async (idDisc) => {
+  const { Disciplina } = require('../models');
+  const disciplina = await Disciplina.findByPk(idDisc);
+
+  if(!disciplina){
+    throw new Error("Disciplina não cadastrada.")
+  }
+}
+
 const post = async (req, res) => {
   try {
-    const novaAtividade = await service.create(req.body);
+    const { idDisc } = req.params;
+    await validaDisciplina(idDisc);
+    const novaAtividade = await service.create(req.body,idDisc);
 
     if (!novaAtividade) return res.status(400).json({ error: 'Atividade já existe' });
 

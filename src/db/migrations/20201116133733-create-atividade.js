@@ -19,6 +19,10 @@ module.exports = {
       dataEntrega: {
         type: Sequelize.DATE
       },
+      disciplinaId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

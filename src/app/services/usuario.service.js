@@ -22,14 +22,16 @@ const create = async ({ nome, senha, email,cargo }) => {
 };
 
 const get = async () => {
-  const usuarios = await Usuario.findAll();
+  const usuarios = await Usuario.findAll({
+    include: ['disciplinas', 'disciplinasProfessor']
+  });
 
   return usuarios;  
 };
 
 const getById = async (id) => {
   const usuario = await Usuario.findByPk(id, {
-    include: 'disciplinas'
+    include: ['disciplinas', 'disciplinasProfessor']
   });
 
   return usuario;  

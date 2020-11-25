@@ -11,7 +11,7 @@ router.get('/', (_, res) => res.send('API :)'));
 
 router.use('/usuario', usuario);
 router.use('/disciplina', disciplina)
-router.use('/atividade', atividade)
+router.use('/disciplina', atividade)
 router.use('/matricula', matricula)
 
 module.exports = router;
