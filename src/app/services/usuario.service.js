@@ -22,15 +22,27 @@ const create = async ({ nome, senha, email,cargo }) => {
 };
 
 const get = async () => {
-  const usuarios = await Usuario.findAll();
+  const usuarios = await Usuario.findAll({
+    include: ['disciplinas', 'disciplinasProfessor']
+  });
 
   return usuarios;  
 };
 
 const getById = async (id) => {
-  const usuario = await Usuario.findByPk(id);
+  const usuario = await Usuario.findByPk(id, {
+    include: ['disciplinas', 'disciplinasProfessor']
+  });
 
   return usuario;  
+};
+
+const getDisciplinasMatriculadas = async(id) =>{
+  const usuario = await getById(id);
+  if(!usuario){
+    return;
+  }
+  return usuario.disciplinasMatriculadas;
 };
 
 const edit = async (id, data) => {
@@ -70,6 +82,7 @@ module.exports = {
   create,
   get,
   getById,
+  getDisciplinasMatriculadas,
   edit,
   deleteById,
   login

@@ -1,24 +1,40 @@
 const { Atividade } = require('../models');
 
-const create = async ({ nome, descricao, dataEntrega }) => {
+const create = async ({ nome, descricao, dataEntrega }, disciplinaId) => {
+
+  const atividade = await Atividade.findOne({
+    where: {
+      nome,
+      disciplinaId
+    },
+  });
+
+  if (atividade) {
+    return;
+  }
 
   const novaAtividade = await Atividade.create({
     nome,
     descricao,
-    dataEntrega
+    dataEntrega,
+    disciplinaId
   });
 
   return novaAtividade;
 };
 
 const get = async () => {
-  const atividades = await Atividade.findAll();
+  const atividades = await Atividade.findAll({
+    include: 'disciplina'
+  });
 
   return atividades;  
 };
 
 const getById = async (id) => {
-  const atividade = await Atividade.findByPk(id);
+  const atividade = await Atividade.findByPk(id, {
+    include: 'disciplina'
+  });
 
   return atividade;  
 };
