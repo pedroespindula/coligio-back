@@ -1,23 +1,8 @@
 const service = require('../services/disciplina.service');
 
-const validaProfessor = async (idProf) => {
-  const { Usuario } = require('../models');
-  const usuario = await Usuario.findByPk(idProf);
-
-  if(!usuario){
-    throw new Error("Usuário não cadastrado.")
-  }
-
-  if(usuario.cargo.toLowerCase() == "aluno"){
-    throw new Error("Usuário não é um professor.")
-  }
-}
-
 const post = async (req, res) => {
   try {
-    const { idProf } = req.params;
-    await validaProfessor(idProf);
-    const novaDisciplina = await service.create(req.body,idProf);
+    const novaDisciplina = await service.create(req.body, req.usuario.id);
 
     if (!novaDisciplina) return res.status(400).json({ error: 'Disciplina já existe' });
 
