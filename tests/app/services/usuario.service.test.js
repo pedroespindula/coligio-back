@@ -1,5 +1,5 @@
-const { Usuario } = require('../models');
-const { Service } = require('../services/usuario.service');
+const { Usuario } = require('../../../src/app/models');
+const { Service } = require('../../../src/app/services/usuario.service');
 
 
 //Teste de criação de um novo usuário
