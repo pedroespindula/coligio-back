@@ -1,4 +1,7 @@
 const service = require('../services/usuario.service');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../../config/auth')
 
 const post = async (req, res) => {
   try {
@@ -82,10 +85,32 @@ const deleteById = async (req, res, next) => {
   }
 };
 
+const login = async(req, res) => {
+  try {
+    const { email, senha } = req.body;
+    const resultado = await service.login(email, senha);
+
+    if (!resultado)
+      return res.status(404).json({ error: 'Email ou senha inválidas' });
+
+    const { usuario, token } = resultado;
+
+    return res.json({ usuario, token });
+  } catch (e) {
+    console.log(e)
+    const message = 'Erro ao realizar login. ';
+
+    res.status(500).json({ error: `${message} ${e.message}` });
+    return e.message();
+  }
+}
+
+
 module.exports = {
   post,
   get,
   getById,
   put,
-  deleteById
+  deleteById,
+  login
 }

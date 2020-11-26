@@ -61,41 +61,22 @@ const deleteById = async (id) => {
   return usuarioDeletado;
 };
 
-const subscribeUser = async (userId, disciplinaId) => {
-  const usuario = await getById(userId);
+const login = async(email, senha) => {
+  const usuario = await Usuario.findOne({
+    where: { email }
+  });
 
-  const { disciplinaService } = require('./disciplina.service');
-  const disciplina = await disciplinaService.getById(disciplinaId);
+  if (!usuario) return null;
 
-  if( usuario && disciplina){
-    if(await usuario.disciplinasMatriculadas.indexOf(disciplina) == -1){
-      const userSubscribed = await usuario.disciplinasMatriculadas.push(disciplina);
-      await disciplinaService.addUserToDisciplina(usuario, disciplina);
+  const senhaValida = await usuario.checaSenha(senha);
 
-      return userSubscribed;
-    }
-  }
-  return;
-};
+  if (!senhaValida) return null
 
-const unsubscribeUser = async (userId, disciplinaId) => {
-  const usuario = await getById(userId);
-
-  const { disciplinaService } = require('./disciplina.service');
-  const disciplina = await disciplinaService.getById(disciplinaId);
-
-  if(usuario && disciplina){
-    const index = await usuario.disciplinasMatriculadas.indexOf(disciplina);
-    if(index > -1){
-      const userUnsubscribed = await usuario.disciplinasMatriculadas.splice(index, 1);
-      await disciplinaService.removeUserFromDisciplina(usuario, disciplina);
-      return userSubscribed;
-    }
-  }
-
-  return ;
-};
-
+  return {
+    usuario,
+    token: usuario.geraToken(),
+  };
+}
 
 module.exports = {
   create,
@@ -104,6 +85,5 @@ module.exports = {
   getDisciplinasMatriculadas,
   edit,
   deleteById,
-  subscribeUser,
-  unsubscribeUser
+  login
 }
