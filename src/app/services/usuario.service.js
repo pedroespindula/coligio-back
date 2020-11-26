@@ -49,10 +49,28 @@ const deleteById = async (id) => {
   return usuarioDeletado;
 };
 
+const login = async(email, senha) => {
+  const usuario = await Usuario.findOne({
+    where: { email }
+  });
+
+  if (!usuario) return null;
+
+  const senhaValida = await usuario.checaSenha(senha);
+
+  if (!senhaValida) return null
+
+  return {
+    usuario,
+    token: usuario.geraToken(),
+  };
+}
+
 module.exports = {
   create,
   get,
   getById,
   edit,
-  deleteById
+  deleteById,
+  login
 }
