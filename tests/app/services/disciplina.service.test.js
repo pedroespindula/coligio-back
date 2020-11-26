@@ -53,5 +53,9 @@ test("remove aluno de disciplina", () =>{
     const u1 = await Usuario.create({nome:"Vitor", senha:"1234", email:"vitor@gmail.com", cargo: "aluno"});
     expect(await Service.removeUserFromDisciplina(u1, d1)).toBe(null);
     await addUserToDisciplina(u1,d1);
-    expect(await Service.removeUserFromDisciplina(u1, d1)).toBe(u1);
+    expect(await Service.removeUserFromDisciplina(u1, d1)).toBe(null);
+    await addUserToDisciplina(u1,d1);
+    const m1 = 
+    expect(await Service.removeUserFromDisciplina(u1, d1)).toBe(null);
+
 });
