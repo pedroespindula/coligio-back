@@ -1,10 +1,10 @@
 const { Disciplina } = require('../../../src/app/models');
-const { Service } = require('../../../src/app/services/disciplina.service');
+const Service  = require('../../../src/app/services/disciplina.service');
 
 
 test("cria disciplina", async() => {
-    expect(await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4)).toContain({nome:"engenharia de software", semestre:"RAE", carga:60});
-    expect(await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4)).toBeNull();
+    expect(await Service.create({nome:"engenharia de software", semestre:"RAE", cargaHoraria:60})).toContain({nome:"engenharia de software", semestre:"RAE", cargaHoraria:60});
+    expect(await Service.create({nome:"engenharia de software", semestre:"RAE", cargaHoraria:60})).toBeNull();
 });
 
 test("busca disciplinas", async() => {

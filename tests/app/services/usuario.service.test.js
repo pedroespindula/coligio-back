@@ -1,6 +1,5 @@
 const { Usuario } = require('../../../src/app/models');
-const { Service } = require('../../../src/app/services/usuario.service');
-
+const Service = require('../../../src/app/services/usuario.service');
 
 //Teste de criação de um novo usuário
 test("cria novo usuario", async() =>{
