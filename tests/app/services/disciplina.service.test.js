@@ -2,12 +2,12 @@ const { Disciplina } = require('../../../src/app/models');
 const { Service } = require('../../../src/app/services/disciplina.service');
 
 
-test("cria disciplina", () => {
+test("cria disciplina", async() => {
     expect(await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4)).toContain({nome:"engenharia de software", semestre:"RAE", carga:60});
     expect(await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4)).toBeNull();
 });
 
-test("busca disciplinas", () => {
+test("busca disciplinas", async() => {
     expect(await Service.get()).toHaveLength(0);
     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
     expect(await Service.get()).toHaveLength(1);
@@ -15,7 +15,7 @@ test("busca disciplinas", () => {
     expect(await Service.get()).toHaveLength(2);
 });
 
-test("busca disciplinas por id", () =>{
+test("busca disciplinas por id", async() =>{
     expect(await Service.getById(1)).toBeNull();
     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
     expect(await Service.getById(1)).toContain({nome:"engenharia de software", semestre:"RAE", carga:60});
@@ -24,7 +24,7 @@ test("busca disciplinas por id", () =>{
     expect(await Service.getById(141)).toBeNull();
 });
 
-test("busca alunos da disciplina", () => {
+test("busca alunos da disciplina", async() => {
     expect(await Service.getAlunosDisciplina(123)).toBeNull();
     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
     const { Usuario } = require('../../../src/app/models/usuario');
@@ -36,14 +36,14 @@ test("busca alunos da disciplina", () => {
 });
 
 
-test("deleta disciplina", () => {
-    expect(Service.deleteById(3411)).toBeNull();
+test("deleta disciplina", async() => {
+    expect(await Service.deleteById(3411)).toBeNull();
     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);    
-    expect(Service.deleteById(1)).toContain({nome:"engenharia de software", semestre:"RAE", carga:60});
-    expect(Service.deleteById(1)).toBeNull();
+    expect(await Service.deleteById(1)).toContain({nome:"engenharia de software", semestre:"RAE", carga:60});
+    expect(await Service.deleteById(1)).toBeNull();
 });
 
-test("adiciona aluno a disciplina", () => {
+test("adiciona aluno a disciplina", async() => {
     expect(await addUserToDisciplina(354,214)).toBeNull();
     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
     const { Usuario } = require('../../../src/app/models/usuario');
@@ -54,7 +54,7 @@ test("adiciona aluno a disciplina", () => {
 });
 
 
-test("remove aluno de disciplina", () =>{
+test("remove aluno de disciplina", async() =>{
     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
     const { Usuario } = require('../../../src/app/models/usuario');
     const u1 = await Usuario.create({nome:"Vitor", senha:"1234", email:"vitor@gmail.com", cargo: "aluno"});
