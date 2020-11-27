@@ -5,9 +5,9 @@ const {Usuario} = require('../../../src/app/models/usuario');
 const { request, response } = require('express');
 
 test("post de disciplina", () => {
-    const novaDisciplina = Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
-    expect(await Controller.post(novaDisciplina, response)).toContain(novaDisciplina);
-    expect(await Controller.post(novaDisciplina, response)).toContain('Disciplina já existe');
+
+    expect(await Controller.post({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1})).toContain({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
+    expect(await Controller.post({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1})).toContain('Disciplina já existe');
 
 });
 
@@ -24,13 +24,23 @@ test("get disciplina", () => {
 test("get disciplina a partir de um id", () =>{
     expect(Controller.getbyId(13143)).toContain('Disciplina não encontrada');
     const novaDisciplina = Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
-    expect(Controller.getbyId(1)).toContain(novaDisciplina);
+    expect(Controller.getbyId(1)).toContain({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
 
 });
 
 test("Deleta disciplina a partir de um id", () =>{
     expect(Controller.deleteById(13143)).toContain('Disciplina não encontrada');
     const novaDisciplina = Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
-    expect(Controller.deleteById(1)).toContain(novaDisciplina);
+    expect(Controller.deleteById(1)).toContain({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
     expect(Controller.deleteById(1)).toContain('Disciplina não encontrada');
+});
+
+
+test("Teste geral", async () => {
+    expect(await Controller.post({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1})).toContain({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
+    expect(await Controller.get()).toHaveLength(1);
+    expect(await Controller.post({nome:"TCC", semestre:"RAE", cargaHoraria: 430, professorId:1})).toContain({nome:"TCC", semestre:"RAE", cargaHoraria: 430, professorId:1});
+    expect(await Controller.get()).toHaveLength(2);
+    expect(Controller.deleteById(1)).toContain({nome:"ES", semestre:"RAE", cargaHoraria: 60, professorId: 1});
+    expect(Controller.deleteById(2)).toContain({nome:"TCC", semestre:"RAE", cargaHoraria: 430, professorId:1});
 });
