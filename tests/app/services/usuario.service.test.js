@@ -24,12 +24,11 @@ test("busca todos os usuarios", async() => {
 test("busca usuario por id", async() =>{
     expect(await Service.getById(1)).toBeNull();
     const u1 = await Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno");
-    expect(await Service.get(1)).toContain(u1);
+    expect(await Service.getById(1)).toContain(u1);
 
     const u2 = Service.create("Victor", "87654321", "victor@gmail.com", "professor");
-    expect(await Service.get(2)).toContain(u2);
-
-    expect(await Service.get(3)).toBeNull();
+    expect(await Service.getById(2)).toContain(u2);
+    expect(await Service.getById(3)).toBeNull();
 });
 
 //Teste de edição de usuário
@@ -42,6 +41,7 @@ test("edita usuario", async() => {
 
 //Teste de deleção de usuário
 test("deleta usuario", async() =>{
+    expect(await Service.deleteById(1)).toBeNull();
     const u1 = await Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno");
     expect(await Service.deleteById(1)).toContain(u1);
 });
@@ -50,5 +50,5 @@ test("deleta usuario", async() =>{
 //Teste de login
 test("loga usuario", async() =>{
     const u1 = Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno");
-    expect(await Service.login("vitor@gmail.com", "12345678")).toContain({u1});
+    expect(await Service.login("vitor@gmail.com", "12345678")).toContain({nome:"Vitor", senha:"12345678", email:"vitor@gmail.com", cargo:"aluno"});
 });
