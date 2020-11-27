@@ -1,7 +1,6 @@
 const { Disciplina } = require('../models');
 
 const create = async ({nome, semestre, cargaHoraria}, professorId) => {
-  
     const disciplina = await Disciplina.findOne({
     where: {
       nome,
