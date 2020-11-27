@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "migrate": "sequelize db:migrate",
     "migrate:generate": "sequelize migration:generate",
     "migrate:undo": "sequelize db:migrate:undo",
