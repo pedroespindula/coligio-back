@@ -20,7 +20,6 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false
       }
     },
-    {}
   );
   //Uma atividade pertence a uma disciplina
   sequelize.models.Atividade.belongsTo(Disciplina, {

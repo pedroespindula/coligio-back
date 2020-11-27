@@ -1,42 +1,40 @@
-
-const { Disciplina } = require('../../../src/app/models/disciplina');
-const { Usuario } = require('../../../src/app/models/usuario');
-const {Atividade} = require('../../../src/app/models/atividade');
-const { Service } = require('../../../src/app/services/atividade.service');
-
-
+const { Disciplina } = require('../../../src/app/models');
+const Service = require('../../../src/app/services/atividade.service');
 
 test("cria atividade", async() => {
-    const d1 = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60}, 12);
-    expect(await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020" }, 1)).toContain({nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020",disciplinaId:1});
-    expect(await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020" }, 1)).toBeNull();    
+    const { id } = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60, professorId: 12});
+    const date = new Date();
+
+    expect(await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:date }, id)).toEqual(expect.objectContaining({nome:"Projeto Final", descricao:"Nota 10", dataEntrega:date,disciplinaId:id}));
 });
 
 test("busca atividades", async() => {
-    expect(await Service.get()).toHaveLength(0);
-    const d1 = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60}, 12);
-    const a1 = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020" }, 1);
-    expect(await Service.get()).toHaveLength(1);
+    const { id } = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60, professorId: 12});
+    const date = new Date();
+    const a1 = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:date }, id);
+    expect(await Service.get()).not.toHaveLength(0);
 });
 
 test("busca atividades por id", async() => {
-    expect(await Service.getById(1)).toBeNull();
-    const d1 = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60}, 12);
-    const a1 = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020" }, 1);
-    expect(await Service.getById(1)).toContain({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020" });
+    const { id: disciplinaId } = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60, professorId: 12});
+    const date = new Date();
+    const { id: atividadeId } = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:date }, disciplinaId);
+    expect(await Service.getById(atividadeId)).toEqual(expect.objectContaining({ nome:"Projeto Final", descricao:"Nota 10", disciplinaId: disciplinaId }));
 });
 
 test("edita atividade", async () => {
-    expect(await Service.edit(198, {nome:"Projeto Inicial"})).toBeNull();
-    const d1 = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60}, 12);
-    const a1 = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020" }, 1);
-    expect(await Service.edit(1, {nome:"Projeto Inicial"})).toContain({nome:"Projeto Inicial",disciplinaId:1});
+    const date = new Date();
+    const { id: disciplinaId } = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60, professorId: 12});
+    const { id: atividadeId } = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:date }, disciplinaId);
+    await Service.edit(atividadeId, {nome:"Projeto Inicial"});
+    expect(await Service.getById(atividadeId)).toEqual(expect.objectContaining({ nome:"Projeto Inicial" }));
 });
 
 test("deleta atividade", async () => {
-    expect(await Service.deleteById(341)).toBeNull();
-    const d1 = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60}, 12);
-    const a1 = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:"27/11/2020" }, 1);
-    expect(await Service.deleteById(1)).toContain(a1);
+    const date = new Date();
+    const { id: disciplinaId } = await Disciplina.create({nome:"ES", semestre:"RAE", cargaHoraria:60, professorId: 12});
+    const { id: atividadeId } = await Service.create({ nome:"Projeto Final", descricao:"Nota 10", dataEntrega:date }, disciplinaId);
+    await Service.deleteById(atividadeId);
+    expect(await Service.getById(atividadeId)).toBeNull();
 });
 
