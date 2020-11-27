@@ -1,13 +1,15 @@
 const service = require('../services/matricula.service');
 
-const matriculaAluno = async (req, res) => {
+const matricular = async (req, res) => {
     try {
-        const { idDisc, idAluno } = req.params;
-        const usuario = await service.matriculaAluno(idAluno, idDisc);
+        const idDisciplina = req.params.id;
+        const idUsuario = req.usuario.id;
 
-        if (!usuario) return res.status(404).json({ error: 'Matrícula já cadastrada' });
+        const disciplina = await service.matricular(idDisciplina, idUsuario);
 
-        return res.status(201).json(usuario);
+        if (!disciplina) return res.status(404).json({ error: 'Matrícula já cadastrada' });
+
+        return res.status(201).json(disciplina);
     } catch (e) {
         const errorMsg = 'Erro ao matricular aluno na disciplina. ';
 
@@ -16,17 +18,18 @@ const matriculaAluno = async (req, res) => {
     }
 };
 
-const desmatriculaAluno = async (req, res) => {
+const desmatricular = async (req, res) => {
     try {
-      const { idDisc, idAluno } = req.params;
-      
-      const usuario = await service.desmatriculaAluno(idAluno, idDisc);
-  
-      if (!usuario) res.status(404).json({ error: 'Usuário não encontrado' });
-  
-      return res.status(200).json(usuario);
+        const idDisciplina = req.params.id;
+        const usuarioId = req.usuario.id;
+
+        const disciplina = await service.desmatricular(idDisciplina, usuarioId);
+
+        if (!disciplina) return res.status(404).json({ error: 'Matrícula não existe' });
+
+        return res.status(200).json(disciplina);
     } catch (e) {
-      const errorMsg = 'Erro ao buscar usuário por id';
+      const errorMsg = 'Erro ao desmatricular aluno na disciplina';
       
       console.error(errorMsg, '', e.message);
       return res.status(500).json({ error: `${errorMsg} ${e.message}` });
@@ -34,6 +37,6 @@ const desmatriculaAluno = async (req, res) => {
   };
 
 module.exports = {
-    matriculaAluno,
-    desmatriculaAluno
+    matricular,
+    desmatricular
 }

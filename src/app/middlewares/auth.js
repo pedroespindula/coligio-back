@@ -63,7 +63,7 @@ const verificaPermissoes = (permissoes) => {
     try {
       await Promise.all(
         permissoes.map(async (nomePermissao) => {
-          await verifyPermissions(nomePermissao, req.usuario.id);
+          await verificaPermissao(nomePermissao, req.usuario.id);
         })
       );
       next();
