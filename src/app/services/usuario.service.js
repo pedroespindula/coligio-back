@@ -22,9 +22,7 @@ const create = async ({ nome, senha, email,cargo }) => {
 };
 
 const get = async () => {
-  const usuarios = await Usuario.findAll({
-    include: ['disciplinas', 'disciplinasProfessor']
-  });
+  const usuarios = await Usuario.findAll();
 
   return usuarios;  
 };
