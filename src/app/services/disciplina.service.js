@@ -42,7 +42,11 @@ const get = async (usuario) => {
     where: {
       usuarioId: usuario.id
     },
-    include: ["disciplina"]
+    include: [{
+      model: Disciplina,
+      as: "disciplina",
+      include: ["professor"]
+    }]
   });
 
   return matriculas;  
