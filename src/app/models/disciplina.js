@@ -22,15 +22,28 @@ module.exports = (sequelize, Sequelize) => {
     },
     {}
   );
-  //Uma atividade pertence a uma disciplina
-  sequelize.models.Atividade.belongsTo(Disciplina, {
-    foreignKey: 'disciplinaId',
-    as: 'disciplina'
-  });
-  //Uma disciplina pode ter várias atividades
-  Disciplina.hasMany(sequelize.models.Atividade, {
-    foreignKey: 'disciplinaId',
-    as: 'atividades'
-  });
+
+  Disciplina.associate = (models) => {
+    //Uma disciplina pode ter várias atividades
+    Disciplina.hasMany(models.Atividade, {
+      foreignKey: 'disciplinaId',
+      as: 'atividades'
+    });
+
+    //Uma disciplina pode ter vários usuários
+    Disciplina.belongsToMany(models.Usuario, {
+      through: sequelize.models.Matricula,
+      as: 'alunos',
+      foreignKey: 'disciplinaId'
+    });
+
+    //Uma disciplina tem um professor
+    Disciplina.belongsTo(models.Usuario, {
+      foreignKey: 'professorId',
+      as: 'professor'
+    });
+  }
+  
   return Disciplina;
 };
+

@@ -21,5 +21,15 @@ module.exports = (sequelize, Sequelize) => {
     {}
   );
 
+  Atividade.associate = (models) => {
+    //Uma atividade pertence a uma disciplina
+    Atividade.belongsTo(models.Disciplina, {
+      foreignKey: 'disciplinaId',
+      as: 'disciplina'
+    });
+  }
+
   return Atividade;
 };
+
+

@@ -12,6 +12,7 @@ router.post(
 router.get(
   '/',
   auth.verificarToken,
+  auth.verificaPermissoes(["aluno","professor"]),
   controller.get
 );
 router.get(

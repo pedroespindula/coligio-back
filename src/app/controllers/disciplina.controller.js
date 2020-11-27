@@ -17,8 +17,9 @@ const post = async (req, res) => {
   
 const get = async (req, res, next) => {
   try {
+    const usuario = req.usuario
     
-    const disciplinas = await service.get();
+    const disciplinas = await service.get(usuario);
 
     return res.status(200).json(disciplinas);
   } catch (e) {

@@ -29,28 +29,20 @@ module.exports = (sequelize, Sequelize) => {
     {}
   );
 
-  //Um usuario pode esta em várias disciplinas
-  Usuario.belongsToMany(sequelize.models.Disciplina, {
-    through: sequelize.models.Matricula,
-    as: 'disciplinas',
-    foreignKey: 'usuarioId'
-  });
-  //Uma disciplina pode ter vários usuários
-  sequelize.models.Disciplina.belongsToMany(sequelize.models.Usuario, {
-    through: sequelize.models.Matricula,
-    as: 'alunos',
-    foreignKey: 'disciplinaId'
-  });
-  //Uma disciplina tem um professor
-  sequelize.models.Disciplina.belongsTo(Usuario, {
-    foreignKey: 'professorId',
-    as: 'professor'
-  });
-  //Um professor pode estar em várias disciplinas
-  Usuario.hasMany(sequelize.models.Disciplina, {
-    foreignKey: 'professorId',
-    as: 'disciplinasProfessor'
-  });
+  Usuario.associate = (models) => {
+    //Um usuario pode esta em várias disciplinas
+    Usuario.belongsToMany(models.Disciplina, {
+      through: sequelize.models.Matricula,
+      as: 'disciplinas',
+      foreignKey: 'usuarioId'
+    });
+
+    //Um professor pode estar em várias disciplinas
+    Usuario.hasMany(models.Disciplina, {
+      foreignKey: 'professorId',
+      as: 'disciplinasProfessor'
+    });
+  }
 
   Usuario.beforeSave(async function(usuario){
     const hash = await bcrypt.hash(usuario.senha, 10);
@@ -74,4 +66,3 @@ module.exports = (sequelize, Sequelize) => {
   
   return Usuario;
 };
-

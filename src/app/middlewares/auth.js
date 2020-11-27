@@ -52,20 +52,16 @@ async function checaTokenParaReset(token) {
   }
 }
 
-const verificaPermissao = async (cargoUsuario, idUsuario) => {
-  const usuario = await Usuario.findByPk(idUsuario);
-  if (usuario.cargo !== cargoUsuario)
-    throw new Error('Usuário não possui permissão.')
-};
-
 const verificaPermissoes = (permissoes) => {
   return async (req, res, next) => {
     try {
-      await Promise.all(
-        permissoes.map(async (nomePermissao) => {
-          await verificaPermissao(nomePermissao, req.usuario.id);
-        })
-      );
+      const usuario = await Usuario.findByPk(req.usuario.id);
+
+      if (!permissoes.includes(usuario.cargo))
+        throw new Error('Usuário não possui permissão.')
+
+      req.usuario = usuario;
+
       next();
     } catch (error) {
       res.status(401).json({ error: error.message });
@@ -99,6 +95,5 @@ module.exports = {
   resetaToken,
   verificaPermissoes,
   checaTokenParaReset,
-  verificaPermissao,
   estaLogado,
 };
