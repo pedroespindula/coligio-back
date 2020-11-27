@@ -6,7 +6,7 @@ const { Service } = require('../../../src/app/services/usuario.service');
 test("cria novo usuario", () =>{
     expect(Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno")).toBe(Usuario.create("Vitor", "12345678", "vitor@gmail.com", "aluno"));
     expect(Service.create("Victor", "87654321", "victor@gmail.com", "professor")).toBe(Usuario.create("Victor", "87654321", "victor@gmail.com", "professor"));
-    expect(Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno")).toBe(null);
+    expect(Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno")).toBeNull();
 });
 
 //Teste de busca de usuários cadastrados
@@ -22,22 +22,22 @@ test("busca todos os usuarios", () => {
 
 //Teste de busca por um usuário específico
 test("busca usuario por id", () =>{
-    expect(Service.getById(1)).toBe(null);
+    expect(Service.getById(1)).toBeNull();
     const u1 = Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno");
     expect(Service.get(1)).toBe(u1);
 
     const u2 = Service.create("Victor", "87654321", "victor@gmail.com", "professor");
     expect(Service.get(2)).toBe(u2);
 
-    expect(Service.get(3)).toBe(null);
+    expect(Service.get(3)).toBeNull();
 });
 
 //Teste de edição de usuário
 test("edita usuario", () => {
     var u1 = Service.create("Vitor", "12345678", "vitor@gmail.com", "aluno");
-    expect(u1.nome).toBe("Vitor");
+    expect(u1.nome).toMatch("Vitor");
     u1 = Service.edit(1, {nome: "Severino"});
-    expect(u1.nome).toBe("Severino");
+    expect(u1.nome).toMatch("Severino");
 
 });
 
