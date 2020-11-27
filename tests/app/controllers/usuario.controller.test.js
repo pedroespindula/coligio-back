@@ -1,7 +1,5 @@
 const {Service} = require('../../../src/app/services/usuario.service');
 const {Controller} = require('../../../src/app/controllers/usuario.controller');
-const {Disciplina} = require('../../../src/app/models/disciplina')
-const {Usuario} = require('../../../src/app/models/usuario');
 const { request, response } = require('express');
 
 test("post de usuario", async () => {
