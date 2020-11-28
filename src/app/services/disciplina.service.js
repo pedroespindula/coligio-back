@@ -77,6 +77,16 @@ const deleteById = async (id) => {
   return disciplinaApagada;
 };
 
+const deleteByName = async (nome) => {
+  const disciplinaApagada = await Disciplina.destroy({
+    where: {
+      nome
+    }
+  });
+
+  return disciplinaApagada;
+};
+
 const addUserToDisciplina = async (user, disciplina) => {
   const matriculados = await disciplina.matriculados.push(user);
   return matriculados;
@@ -96,5 +106,6 @@ module.exports = {
   getAlunosDisciplina,
   deleteById,  
   addUserToDisciplina,
-  removeUserFromDisciplina
+  removeUserFromDisciplina,
+  deleteByName,
 }

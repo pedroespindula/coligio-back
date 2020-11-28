@@ -32,9 +32,7 @@ const get = async () => {
 };
 
 const getById = async (id) => {
-  const atividade = await Atividade.findByPk(id, {
-    include: 'disciplina'
-  });
+  const atividade = await Atividade.findByPk(id);
 
   return atividade;  
 };

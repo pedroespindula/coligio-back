@@ -20,7 +20,6 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false
       }
     },
-    {}
   );
 
   Disciplina.associate = (models) => {
