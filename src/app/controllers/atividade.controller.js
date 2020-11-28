@@ -28,8 +28,9 @@ const post = async (req, res) => {
   
 const get = async (req, res, next) => {
   try {
+    const disciplinaId = req.params.idDisc;
     
-    const atividades = await service.get();
+    const atividades = await service.get(disciplinaId);
 
     return res.status(200).json(atividades);
   } catch (e) {

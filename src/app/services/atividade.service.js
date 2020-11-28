@@ -23,8 +23,11 @@ const create = async ({ nome, descricao, dataEntrega }, disciplinaId) => {
   return novaAtividade;
 };
 
-const get = async () => {
+const get = async (disciplinaId) => {
   const atividades = await Atividade.findAll({
+    where: {
+      disciplinaId
+    },
     include: 'disciplina'
   });
 
