@@ -38,33 +38,3 @@ test("deleta disciplina", async() => {
     expect(await Service.getById(id)).toBeNull();
 });
 
-// test("busca alunos da disciplina", async() => {
-//     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
-//     const { Usuario } = require('../../../src/app/models/usuario');
-//     const u1 = await Usuario.create({nome:"Vitor", senha:"1234", email:"vitor@gmail.com", cargo: "aluno"});
-//     expect(await Service.getAlunosDisciplina(1)).toHaveLength(0);
-//     const { Matricula } = require('../../../src/app/services/matricula.service');
-//     const m1 = await Matricula.matriculaAluno(1,1);    
-//     expect(await Service.getAlunosDisciplina(1)).toHaveLength(1);
-// });
-
-// test("adiciona aluno a disciplina", async() => {
-//     expect(await addUserToDisciplina(354,214)).toBeNull();
-//     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
-//     const { Usuario } = require('../../../src/app/models/usuario');
-//     const u1 = await Usuario.create({nome:"Vitor", senha:"1234", email:"vitor@gmail.com", cargo: "aluno"});
-//     const { Matricula } = require('../../../src/app/services/matricula.service');
-//     const m1 = await Matricula.matriculaAluno(1,1);    
-//     expect(await addUserToDisciplina(u1,d1)).toHaveLength(1);
-// });
-
-
-// test("remove aluno de disciplina", async() =>{
-//     const d1 = await Service.create({nome:"engenharia de software", semestre:"RAE", carga:60}, 4);
-//     const { Usuario } = require('../../../src/app/models/usuario');
-//     const u1 = await Usuario.create({nome:"Vitor", senha:"1234", email:"vitor@gmail.com", cargo: "aluno"});
-//     expect(await Service.removeUserFromDisciplina(u1, d1)).toBeNull();
-//     await addUserToDisciplina(u1,d1);
-//     expect(await Service.removeUserFromDisciplina(u1, d1)).toContain({nome:"Vitor", senha:"1234", email:"vitor@gmail.com", cargo: "aluno"});
-//     expect(await Service.removeUserFromDisciplina(u1, d1)).toBeNull();
-// });
